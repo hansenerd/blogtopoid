@@ -32,7 +32,7 @@ config, in style files ``{{styleurl}}`` with blogurl/style.
 Usage
 =====
 
--  pip install blogtopoid
+-  pip install --pre blogtopoid
 -  run blogtopoid --quickstart
 -  run blogtopoid
 -  see post-receive.example for automatically deploying from git
