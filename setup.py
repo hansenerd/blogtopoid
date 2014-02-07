@@ -14,7 +14,7 @@ def read_requirements():
 
 setup(
     name='blogtopoid',
-    version='0.0.1a',
+    version='0.0.1b',
     author='chris',
     author_email='cg@zknt.org',
     packages=find_packages(),
