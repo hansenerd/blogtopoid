@@ -1,3 +1,5 @@
+|PyPI version| |Build Status|
+
 blogtopoid
 ==========
 
@@ -45,3 +47,8 @@ TODO
 -  implement --post
 -  check hashes
 -  paginate index (not relevant with current index)
+
+.. |PyPI version| image:: https://badge.fury.io/py/blogtopoid.png
+   :target: https://pypi.python.org/pypi/blogtopoid
+.. |Build Status| image:: https://travis-ci.org/hansenerd/blogtopoid.png?branch=master
+   :target: https://travis-ci.org/hansenerd/blogtopoid
