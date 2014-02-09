@@ -249,7 +249,7 @@ class Hashstore(object):
         :param blocksize: read file in chunks of blocksize
         :return: sha256 hexdigest
         """
-        with open(filename, 'r') as afile:
+        with open(filename, 'rb') as afile:
             hasher = hashlib.sha256()
             buf = afile.read(blocksize)
             while len(buf) > 0:
