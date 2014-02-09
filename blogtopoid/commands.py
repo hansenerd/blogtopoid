@@ -127,7 +127,7 @@ def generate():
     generate_feed(posts)
 
     # generate tag pages
-    for tag in tags:
+    for tag in tags.values():
         write_file(
             os.path.join(config.outputdir, 'tags', '{}.html'.format(tag.name)),
             generate_index(tag.posts, pages)
