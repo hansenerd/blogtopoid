@@ -10,7 +10,7 @@ import ConfigParser
 import pkg_resources
 
 from .blogtopoid import (Config, generate_index, generate_feed,
-                         generate_tag_indeces, prepare_style, tags, Post, Page)
+                         prepare_style, tags, Post, Page, write_file)
 
 
 def quickstart():
@@ -78,7 +78,7 @@ def quickstart():
     sys.exit(0)
 
 
-def post():
+def new_post():
     """ ask for YAML front-matter options, create empty post
     and start editor
     """
@@ -97,7 +97,8 @@ def generate():
             page = Page(infile)
             pages.append(page)
     for page in pages:
-        page.render(pages)
+        write_file(os.path.join(config.outputdir, page.outfile),
+                   page.render(pages))
 
     posts = []
     for infile in os.listdir(unicode(config.inputdir)):
@@ -115,19 +116,25 @@ def generate():
 
     # render post htmls
     for post in posts:
-        post.render(pages)
+        write_file(os.path.join(config.outputdir, post.outfile),
+                   post.render(pages))
 
     # generate index from index.md
-    generate_index(posts, pages)
+    write_file(os.path.join(config.outputdir, 'index.html'),
+               generate_index(posts, pages))
 
     # generate rss feed
     generate_feed(posts)
 
     # generate tag pages
-    generate_tag_indeces(tags, pages)
+    for tag in tags:
+        write_file(
+            os.path.join(config.outputdir, 'tags', '{}.html'.format(tag.name)),
+            generate_index(tag.posts, pages)
+        )
 
     # copy style dir to disk
-    prepare_style(
-        config.outputdir,
-        config.blogurl,
+    write_file(
+        os.path.join(config.outputdir, 'style', 'style.css'),
+        prepare_style()
     )

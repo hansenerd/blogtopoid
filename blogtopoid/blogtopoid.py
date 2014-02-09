@@ -172,18 +172,12 @@ class Post(object):
         else:
             return
 
-        # write post to disk
-        codecs.open(
-            os.path.join(config.outputdir, self.outfile),
-            'w',
-            'utf-8'
-        ).write(
-            post_template.render(
-                config=config,
-                post=self,
-                pages=pages,
-                add_style=add_style,
-            )
+        # return rendered post
+        return post_template.render(
+            config=config,
+            post=self,
+            pages=pages,
+            add_style=add_style,
         )
 
 
@@ -293,7 +287,7 @@ def generate_feed(posts):
 
 
 def generate_index(posts, pages):
-    """ write index.html to disk
+    """ render index.html files contents
 
     :param posts: post objs to generate index for.
     :type posts: list of Post
@@ -305,82 +299,42 @@ def generate_index(posts, pages):
     post_template = env.get_template('index.html')
 
     # generate index from template
-    ihtml = post_template.render(
+    return post_template.render(
         config=config,
         pages=pages,
         posts=posts,
     )
-    codecs.open(
-        os.path.join(config.outputdir, 'index.html'),
-        'w',
-        'utf-8',
-    ).write(ihtml)
 
 
-def prepare_style(outputdir, blogurl):
+def prepare_style():
     """ read and process style/ directory """
     config = Config()
     # copy static files
-    if not os.path.exists(os.path.join(outputdir, 'style')):
-        os.makedirs(os.path.join(outputdir, 'style'))
+    if not os.path.exists(os.path.join(config.outputdir, 'style')):
+        os.makedirs(os.path.join(config.outputdir, 'style'))
 
     # copy supplementary files to ouput dir
     for filename in os.listdir(config.styledir):
         if os.path.splitext(filename)[1].lower() != '.css':
             shutil.copy(
                 os.path.join(config.styledir, filename),
-                os.path.join(outputdir, 'style')
+                os.path.join(config.outputdir, 'style')
             )
 
-    # write possible syntax highlights
-    codecs.open(
-        os.path.join(config.styledir, 'pygments.css'),
-        'w',
-        'utf-8',
-    ).write(HtmlFormatter().get_style_defs('.codehilite'))
-    # cat all css files together
-    allcss = ""
+    # generate syntax highlight css and append all other CSS files
+    allcss = HtmlFormatter().get_style_defs('.codehilite')
     for cssfile in glob.iglob(os.path.join(config.styledir, '*.css')):
         allcss = allcss + codecs.open(cssfile, 'r', 'utf-8').read()
-    allcss = allcss.replace('{{styleurl}}', "{}style/".format(blogurl))
+    allcss = allcss.replace('{{styleurl}}', "{}style/".format(config.blogurl))
 
-    # minimise and write css
-    codecs.open(
-        os.path.join(outputdir, 'style', 'style.css'),
-        'w',
-        'utf-8'
-    ).write(cssmin(allcss, wrap=1000))
+    # minimise css
+    return cssmin(allcss, wrap=1000)
 
 
-def generate_tag_indeces(tagobjs, pages):
-    """ write tags to disk
+def write_file(filename, content):
+    """ write `content` to `filename`, utf-8 encoded.
 
-    :param pages: pages objs for sidebar
-    :type pages: list of Page
-    :param tagobjs: tag objs to generate indeces for.
-    :type tagobjs: dict (str, Tag)
+    :param filename: filename to write to
+    :param content: content to write
     """
-    config = Config()
-
-    # make output directory for tags
-    outputdir = config.outputdir
-    if not os.path.exists(os.path.join(outputdir, 'tags')):
-        os.makedirs(os.path.join(outputdir, 'tags'))
-
-    # load jinja2 template
-    env = Environment(loader=FileSystemLoader(config.templatedir))
-    post_template = env.get_template('index.html')
-
-    # generate index from index.md
-    # TODO move markdown to md module
-    for tag in tagobjs.values():
-        ihtml = post_template.render(
-            config=config,
-            pages=pages,
-            posts=tag.posts,
-        )
-        codecs.open(
-            os.path.join(config.outputdir, 'tags', '{}.html'.format(tag.name)),
-            'w',
-            'utf-8',
-        ).write(ihtml)
+    codecs.open(filename, 'w', 'utf-8').write(content)

@@ -32,7 +32,7 @@ def main():
         commands.quickstart()
 
     elif args.post:
-        commands.post()
+        commands.new_post()
 
     else:
         commands.generate()
