@@ -30,7 +30,7 @@
             <a class="post-category" style="background: #{{ tag.colour }};"
                href="tags/{{ tag.name }}.html">{{ tag.name }}</a>
         {% endfor %}
-        <a href="{{ post.outfile }}">{{ post.title }}</a>
+        <a href="{{ config.blogurl }}{{ post.outfile }}">{{ post.title }}</a>
     </li>
     {% endfor %}
     </ul>
