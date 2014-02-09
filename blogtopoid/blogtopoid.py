@@ -70,6 +70,7 @@ class Tag(object):
         self.name = name
         self.posts = []
 
+    @property
     def colour(self):
         """ return html colour for Tag. """
         return hashlib.md5(self.name.encode('utf-8')).hexdigest()[:6]
@@ -303,29 +304,11 @@ def generate_index(posts, pages):
     env = Environment(loader=FileSystemLoader(config.templatedir))
     post_template = env.get_template('index.html')
 
-    # generate index from index.md
-    # TODO move markdown to md module
-    indexpage = "# {}\n".format(config.blogtitle)
-    for post in posts:
-        indexpage += "* {}: ".format(
-            post.date.strftime('%Y-%m-%d')
-        )
-        for tag in post.tags:  # TODO HTML?!
-            indexpage += '<a class="post-category" style="background: #{};"' \
-                         ' href="tags/{}.html">{}</a> '.format(
-                             tag.colour(),
-                             tag.name,
-                             tag.name,
-                         )
-        indexpage += "[{}]({})\n".format(
-            post.title,
-            post.outfile,
-        )
-    ihtml = markdown2.markdown(indexpage, extras=config.mdextras)
+    # generate index from template
     ihtml = post_template.render(
         config=config,
-        body=ihtml,
         pages=pages,
+        posts=posts,
     )
     codecs.open(
         os.path.join(config.outputdir, 'index.html'),
@@ -391,21 +374,10 @@ def generate_tag_indeces(tagobjs, pages):
     # generate index from index.md
     # TODO move markdown to md module
     for tag in tagobjs.values():
-        tagpage = "# {}\n".format(tag.name)
-        for post in tag.posts:
-            tagpage += "* {}: ".format(
-                post.date.strftime('%Y-%m-%d')
-            )
-            tagpage += "[{}]({}{})\n".format(
-                post.title,
-                config.blogurl,
-                post.outfile,
-            )
-        ihtml = markdown2.markdown(tagpage, extras=config.mdextras)
         ihtml = post_template.render(
             config=config,
-            body=ihtml,
             pages=pages,
+            posts=tag.posts,
         )
         codecs.open(
             os.path.join(config.outputdir, 'tags', '{}.html'.format(tag.name)),

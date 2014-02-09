@@ -41,7 +41,6 @@ Usage
 TODO
 ====
 
--  don't pregenerate listings (index, tag-pages), move to template.
 -  TEST!
 -  make a shipable default template
 -  implement --post

@@ -40,8 +40,8 @@ Each template gets passed a few variables by blogtopoid.
 
 **index.html only:**
 
-*body*
-  The preformatted page body.
+*posts*
+  A list of Post objects to render. See below for details.
 
 **post.html & page.html only:**
 

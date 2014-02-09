@@ -14,6 +14,6 @@ class TestTag(unittest.TestCase):
 
     def test_tag(self):
         colour = hashlib.md5('tag'.encode('utf-8')).hexdigest()[:6]
-        self.assertEqual(self.tag1.colour(), colour)
+        self.assertEqual(self.tag1.colour, colour)
 
-        self.assertEqual(self.tag2.colour(), 'f32af7')
+        self.assertEqual(self.tag2.colour, 'f32af7')

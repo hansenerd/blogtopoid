@@ -21,7 +21,19 @@
 </div>
 
 <div id="post">
-    {{ body|replace("{{blogurl}}", config.blogurl) }}
+    <h1>{{ config.blogtitle }}</h1>
+    <ul>
+    {% for post in posts %}
+    <li>
+        {{ post.date }}:
+        {% for tag in post.tags %}
+            <a class="post-category" style="background: #{{ tag.colour }};"
+               href="tags/{{ tag.name }}.html">{{ tag.name }}</a>
+        {% endfor %}
+        <a href="{{ post.outfile }}">{{ post.title }}</a>
+    </li>
+    {% endfor %}
+    </ul>
 </div>
 </body>
 </html>
