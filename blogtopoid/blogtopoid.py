@@ -209,6 +209,7 @@ class Page(Post):
         self.link = "{}{}".format(config.blogurl, self.outfile)
 
 
+@singleton
 class Hashstore(object):
     """ store file hashes in a json file """
     def __init__(self, jsonfile):
