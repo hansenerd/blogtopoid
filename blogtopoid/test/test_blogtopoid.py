@@ -66,3 +66,14 @@ class TestHashstore(unittest.TestCase):
             self.hashstore.hashfile('hashme.txt')
         )
         os.remove('hashme.txt')
+
+
+class TestStaticMethods(unittest.TestCase):
+    def test_write_file(self):
+        blogtopoid.write_file('testfilename.txt', '1234')
+
+        with codecs.open('testfilename.txt', 'r', 'utf8') as afile:
+            contents = afile.read()
+            self.assertEqual('1234', contents)
+
+        os.remove('testfilename.txt')

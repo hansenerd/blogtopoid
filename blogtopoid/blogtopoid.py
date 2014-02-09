@@ -338,4 +338,5 @@ def write_file(filename, content):
     :param filename: filename to write to
     :param content: content to write
     """
-    codecs.open(filename, 'w', 'utf-8').write(content)
+    with codecs.open(filename, 'w', 'utf-8') as afile:
+        afile.write(content)
