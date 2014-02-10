@@ -41,11 +41,11 @@ Usage
 TODO
 ====
 
+-  implement --post
 -  TEST!
 -  make a shipable default template
--  implement --post
--  check hashes
 -  paginate index (not relevant with current index)
+-  check hashes
 
 .. |PyPI version| image:: https://badge.fury.io/py/blogtopoid.png
    :target: https://pypi.python.org/pypi/blogtopoid
