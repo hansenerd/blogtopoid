@@ -6,7 +6,10 @@ from __future__ import absolute_import
 import os
 import sys
 import codecs
-import ConfigParser
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
 import pkg_resources
 
 from .blogtopoid import (Config, generate_index, generate_feed,
