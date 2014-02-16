@@ -97,7 +97,8 @@ def generate():
 
     # set up logging
     ch = logging.StreamHandler(sys.stdout)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter('%(asctime)s - %(name)s - '
+                                  '%(levelname)s - %(message)s')
     ch.setFormatter(formatter)
     logging.getLogger('blogtopoid').addHandler(ch)
     logging.getLogger('blogtopoid').setLevel(logging.DEBUG)
