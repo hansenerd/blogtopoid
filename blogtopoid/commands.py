@@ -130,9 +130,12 @@ def generate():
     generate_feed(posts)
 
     # generate tag pages
+    tagdir = os.path.join(config.outputdir, 'tags')
+    if not os.path.exists(tagdir):
+        os.makedirs(tagdir)
     for tag in tags.values():
         write_file(
-            os.path.join(config.outputdir, 'tags', '{}.html'.format(tag.name)),
+            os.path.join(tagdir, '{}.html'.format(tag.name)),
             generate_index(tag.posts, pages)
         )
 
