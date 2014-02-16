@@ -12,6 +12,7 @@ import glob
 import codecs
 import shutil
 import hashlib
+import logging
 import datetime
 try:
     import ConfigParser
@@ -114,9 +115,6 @@ class Post(object):
     def render(self, pages):
         """ generate post html and write to disk """
         config = Config()
-
-        print("writing {}".format(os.path.join(config.outputdir,
-                                               self.outfile)))
 
         # parse front matter
         re_yaml = re.compile(r'(^---\s*$(?P<yaml>.*?)^---\s*$)'
@@ -338,5 +336,6 @@ def write_file(filename, content):
     :param filename: filename to write to
     :param content: content to write
     """
+    logging.getLogger('blogtopoid').info('writing %s', filename)
     with codecs.open(filename, 'w', 'utf-8') as afile:
         afile.write(content)

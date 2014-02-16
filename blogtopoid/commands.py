@@ -6,6 +6,7 @@ from __future__ import absolute_import
 import os
 import sys
 import codecs
+import logging
 try:
     import ConfigParser
 except ImportError:
@@ -93,6 +94,13 @@ def generate():
     """ generate HTML
     """
     config = Config()
+
+    # set up logging
+    ch = logging.StreamHandler(sys.stdout)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    ch.setFormatter(formatter)
+    logging.getLogger('blogtopoid').addHandler(ch)
+    logging.getLogger('blogtopoid').setLevel(logging.DEBUG)
 
     pages = []
     for infile in os.listdir(unicode(config.pagesdir)):
