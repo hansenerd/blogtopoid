@@ -24,6 +24,7 @@ import PyRSS2Gen
 import markdown2
 from cssmin import cssmin
 from slugify import slugify
+from PyQuery import PyQuery
 from docutils.core import publish_parts
 from jinja2 import Environment, FileSystemLoader
 from pygments.formatters.html import HtmlFormatter
@@ -160,6 +161,14 @@ class Post(object):
                 post_content,
                 extras=config.mdextras,
             )
+            # rewrite relative img-srcs to full paths.
+            d = PyQuery(self.body)
+            for img in d.find('img'):
+                if not '/' in img.attrib['src']:
+                    img.attrib['src'] = ''.join([config.blogurl,
+                                                 self.outputpath,
+                                                 img.attrib['src']])
+            self.body = d.html()
         elif self.extension == '.rst':
             rst = publish_parts(
                 post_content,
