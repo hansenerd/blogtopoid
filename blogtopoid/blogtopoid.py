@@ -24,7 +24,7 @@ import PyRSS2Gen
 import markdown2
 from cssmin import cssmin
 from slugify import slugify
-from PyQuery import PyQuery
+from pyquery import PyQuery
 from docutils.core import publish_parts
 from jinja2 import Environment, FileSystemLoader
 from pygments.formatters.html import HtmlFormatter
