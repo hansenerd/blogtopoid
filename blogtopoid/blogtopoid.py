@@ -165,9 +165,9 @@ class Post(object):
             d = PyQuery(self.body)
             for img in d.find('img'):
                 if not '/' in img.attrib['src']:
-                    img.attrib['src'] = ''.join([config.blogurl,
-                                                 self.outputpath,
-                                                 img.attrib['src']])
+                    img.attrib['src'] = '{}{}/{}'.format(config.blogurl,
+                                                         self.outputpath,
+                                                         img.attrib['src'])
             self.body = d.html()
         elif self.extension == '.rst':
             rst = publish_parts(
