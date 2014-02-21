@@ -157,18 +157,7 @@ class Post(object):
         # actually render post
         add_style = ''
         if self.extension == '.md':
-            self.body = markdown2.markdown(
-                post_content,
-                extras=config.mdextras,
-            )
-            # rewrite relative img-srcs to full paths.
-            d = PyQuery(self.body)
-            for img in d.find('img'):
-                if not '/' in img.attrib['src']:
-                    img.attrib['src'] = '{}{}/{}'.format(config.blogurl,
-                                                         self.outputpath,
-                                                         img.attrib['src'])
-            self.body = d.html()
+            self.render_md5(post_content)
         elif self.extension == '.rst':
             rst = publish_parts(
                 post_content,
@@ -186,6 +175,21 @@ class Post(object):
             pages=pages,
             add_style=add_style,
         )
+
+    def render_md5(self, post_content):
+        config = Config()
+        self.body = markdown2.markdown(
+            post_content,
+            extras=config.mdextras,
+        )
+        # rewrite relative img-srcs to full paths.
+        d = PyQuery(self.body)
+        for img in d.find('img'):
+            if not '/' in img.attrib['src']:
+                img.attrib['src'] = '{}{}/{}'.format(config.blogurl,
+                                                     self.outputpath,
+                                                     img.attrib['src'])
+        self.body = d.html()
 
 
 class Page(Post):
