@@ -1,9 +1,9 @@
-Jinja2==2.7.2
+Jinja2==2.7.3
 PyRSS2Gen==1.1
-PyYAML==3.10
+PyYAML==3.11
 Pygments==1.6
 cssmin==0.2.0
 docutils==0.11
-markdown2==2.2.0
+markdown2==2.2.1
 pyquery==1.2.8
-python-slugify==0.0.7
+python-slugify==1.0
