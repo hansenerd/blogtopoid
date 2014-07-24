@@ -1,4 +1,4 @@
-|PyPI version| |Build Status|
+|PyPI version| |Build Status| |Dependency Status|
 
 blogtopoid
 ==========
@@ -51,3 +51,5 @@ TODO
    :target: https://pypi.python.org/pypi/blogtopoid
 .. |Build Status| image:: https://travis-ci.org/hansenerd/blogtopoid.png?branch=master
    :target: https://travis-ci.org/hansenerd/blogtopoid
+.. |Dependency Status| image:: https://gemnasium.com/hansenerd/blogtopoid.svg
+   :target: https://gemnasium.com/hansenerd/blogtopoid
