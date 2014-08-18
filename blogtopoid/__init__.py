@@ -8,8 +8,6 @@ import pkg_resources
 from argparse import ArgumentParser
 
 
-#hashstore = Hashstore('hashstore.json')
-
 def main():
     """ run blogtopoid.
 

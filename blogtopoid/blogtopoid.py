@@ -185,7 +185,7 @@ class Post(object):
         # rewrite relative img-srcs to full paths.
         d = PyQuery(self.body)
         for img in d.find('img'):
-            if not '/' in img.attrib['src']:
+            if '/' not in img.attrib['src']:
                 img.attrib['src'] = '{}{}/{}'.format(config.blogurl,
                                                      self.outputpath,
                                                      img.attrib['src'])
